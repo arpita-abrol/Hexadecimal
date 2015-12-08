@@ -4,7 +4,7 @@
 public class Hexadecimal {
 
     //class var
-    private static String allHex = "0123456789ABCDEF";
+    private static final String ALLHEX = "0123456789ABCDEF";
 
     
     //instance vars
@@ -16,17 +16,19 @@ public class Hexadecimal {
     //default constructor
     public Hexadecimal() {
 	_decNum = 0;
-	_hexNum = "" + _decNum;
+	_hexNum = "0";
     }
 
     //overloaded constructor #1--given _decNum (positive)
     public Hexadecimal( int n ) {
-	this(); //TEMP
+	_decNum = n;
+	_hexNum = decToHex(n);
     }
 
     //overloaded constructor #2--given _hexNum (positive)
     public Hexadecimal( String n ) {
-	this(); //TEMP
+	_hexNum = n;
+	_decNum = hexToDec(n);
     }
 
     
@@ -40,7 +42,7 @@ public class Hexadecimal {
     public static String decToHex( int n ) {
 	String hex = "";
 	while ( n > 0 ) {
-	    hex = (allHex.substring((n%16),(n%16)+1)) + hex;
+	    hex = (ALLHEX.substring((n%16),(n%16)+1)) + hex;
 	    n = n/16;
 	}
 	return hex;
@@ -48,51 +50,79 @@ public class Hexadecimal {
 
     //convert from decimal num to hex num recursive
     public static String decToHexR( int n ) {
-	if ( n == 0 ) { return "0"; }
-        return decToHexR( n/16 ) + (allHex.substring((n%16),(n%16)+1));
+	if ( n == 0 ) { return ""; }
+        return decToHexR( n/16 ) + (ALLHEX.substring((n%16),(n%16)+1));
     }
 
     //convert from hex num to decimal num iterative
     public static int hexToDec( String n ) {
-	return 0; //TEMP
+	int ret = 0;
+	for (int i=0; i<n.length(); i++) {
+	    ret += (int)(ALLHEX.indexOf(n.substring(n.length()-i-1, n.length()-i)) * Math.pow(16, i));
+	}
+	return ret;
     }
 
     //convert from hex num to decimal num recursive
     public static int hexToDecR( String n ) {
-	return 0; //TEMP
+	if (n.length() == 0) {
+	    return 0;
+	}
+	else {
+	    return (int)(ALLHEX.indexOf(n.substring(0,1)) * Math.pow(16, n.length()-1)) + hexToDecR(n.substring(1));
+	}
     }
 
     
     //checks to see if 2 objects are equivalent
     public boolean equals( Object val ) {
-	return false; //TEMP
+	if (val instanceof Hexadecimal) {
+	    return compareTo(val) == 0;
+	}
+	else {throw new ClassCastException("\nequals() input not a Hexadecimal");}
     }
 
     
     //tells which of the 2 hexadecimal objects is greater
     public int compareTo( Object other ) {
-	return 0; //TEMP
+	if (other instanceof Hexadecimal) {
+		if (this._decNum == ((Hexadecimal)other)._decNum) {return 0;}
+		else if (this._decNum < ((Hexadecimal)other)._decNum) {return -1;}
+		else {return 1;}
+	}
+	else {throw new ClassCastException("\ncompareTo() input not a Hexadecimal");}
     }
 
     
     //main method for testing!!!
     public static void main( String[]args ) {
-	System.out.println( decToHex(1) ); //1
-	System.out.println( decToHex(2) ); //2
-	System.out.println( decToHex(15) ); //F
-	System.out.println( decToHex(32) ); //20
-	System.out.println( decToHex(85) ); //55
-	System.out.println( decToHex(4329) ); //10E9
-	System.out.println( decToHex(127) ); //7F
-	System.out.println( decToHex(918273645) ); //36BBBE6D
-  	System.out.println( decToHexR(1) ); //1
-	System.out.println( decToHexR(2) ); //2
-	System.out.println( decToHexR(15) ); //F
-	System.out.println( decToHexR(32) ); //20
-	System.out.println( decToHexR(85) ); //55
-	System.out.println( decToHexR(4329) ); //10E9
-	System.out.println( decToHexR(127) ); //7F
-	System.out.println( decToHexR(918273645) ); //36BBBE6D
+
+	System.out.println();
+	System.out.println("testing...");
+
+	Hexadecimal h1 = new Hexadecimal("7F");
+	Hexadecimal h2 = new Hexadecimal(127);
+	Hexadecimal h3 = new Hexadecimal("10E9");
+	Hexadecimal h4 = h3;
+
+	System.out.println("\n==...");
+	System.out.println(h1 == h2); //should be false
+	System.out.println(h3 == h4); //should be true
+
+	System.out.println("\n.equals()...");
+	System.out.println(h1.equals(h2)); //should be true
+	System.out.println(h3.equals(h4)); //should be true
+	System.out.println(h1.equals(h4)); //should be false
+	System.out.println(h2.equals(h3)); //should be false
+
+	System.out.println("\n.compareTo()...");
+	System.out.println(h1.compareTo(h4)); //should be -1
+	System.out.println(h3.compareTo(h2)); //should be 1
+
+	System.out.println();
+	//System.out.println(h1.compareTo("7F")); //should throw error
+	//System.out.println(h2.equals("10E9")); //should throw error
+	
     } //end main
     
 } //end class
