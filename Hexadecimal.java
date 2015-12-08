@@ -1,5 +1,9 @@
-//NOTE: IF IT HAS '//TEMP', IT'S NOT DONE 
-
+/*
+Team ArpAhNet -- Sarah Yoon, Arpita Abrol
+APCS1 pd10
+HW44 -- This or That or Fourteen Other Things
+2015-12-08
+*/
 
 public class Hexadecimal {
 
