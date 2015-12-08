@@ -32,7 +32,7 @@ public class Hexadecimal {
     
     //string representation aka toString()
     public String toString() {
-	return _hexNum; //TEMP;
+	return _hexNum; 
     }
 
     
@@ -48,7 +48,8 @@ public class Hexadecimal {
 
     //convert from decimal num to hex num recursive
     public static String decToHexR( int n ) {
-	return ""; //TEMP
+	if ( n == 0 ) { return "0"; }
+        return decToHexR( n/16 ) + (allHex.substring((n%16),(n%16)+1));
     }
 
     //convert from hex num to decimal num iterative
@@ -83,6 +84,15 @@ public class Hexadecimal {
 	System.out.println( decToHex(85) ); //55
 	System.out.println( decToHex(4329) ); //10E9
 	System.out.println( decToHex(127) ); //7F
+	System.out.println( decToHex(918273645) ); //36BBBE6D
+  	System.out.println( decToHexR(1) ); //1
+	System.out.println( decToHexR(2) ); //2
+	System.out.println( decToHexR(15) ); //F
+	System.out.println( decToHexR(32) ); //20
+	System.out.println( decToHexR(85) ); //55
+	System.out.println( decToHexR(4329) ); //10E9
+	System.out.println( decToHexR(127) ); //7F
+	System.out.println( decToHexR(918273645) ); //36BBBE6D
     } //end main
     
 } //end class
