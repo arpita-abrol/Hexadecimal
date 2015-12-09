@@ -59,6 +59,7 @@ public class Hexadecimal {
     }
 
     //convert from hex num to decimal num iterative
+    //goes from right to left
     public static int hexToDec( String n ) {
 	int ret = 0;
 	for (int i=0; i<n.length(); i++) {
@@ -66,6 +67,18 @@ public class Hexadecimal {
 	}
 	return ret;
     }
+
+    /*
+      //hexToDec going from left to right
+    public static int hexToDec( String n ) {
+	int dec = 0;
+	for( int i = 0; i < n.length(); i++ ) {
+	    String x = n.substring(i,i+1);
+	    dec += (int)(ALLHEX.indexOf(x)) * Math.pow(16,n.length()-1-i);
+	}
+	return dec;
+    }
+    */
 
     //convert from hex num to decimal num recursive
     public static int hexToDecR( String n ) {
